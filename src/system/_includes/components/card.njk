@@ -1,0 +1,21 @@
+<a href="{{ prompt.url }}" class="prompt-card group bg-slate-900/40 border border-slate-800 rounded-xl p-6 hover:bg-slate-900/60 hover:border-primary-500/50 transition-all duration-300 hover:-translate-y-1 block relative overflow-hidden backdrop-blur-sm shadow-lg hover:shadow-primary-500/10" data-title="{{ prompt.data.title }}" data-tags="{{ (prompt.data.tags or []) | join(',') }}">
+  <!-- Card Highlight Effect -->
+  <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+  
+  <div class="flex items-center gap-2 mb-4">
+    <span class="px-2 py-1 rounded text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700 group-hover:border-primary-500/30 group-hover:text-primary-400 transition-colors max-w-[140px] truncate" title="{{ prompt.data.model }}">{{ prompt.data.model }}</span>
+    <span class="text-slate-600 text-xs shrink-0">{{ prompt.date | readableDate }}</span>
+  </div>
+  <h3 class="text-xl font-bold text-slate-200 mb-2 group-hover:text-white transition-colors tracking-tight line-clamp-2" title="{{ prompt.data.title }}">{{ prompt.data.title }}</h3>
+  <p class="text-slate-400 text-sm mb-4 line-clamp-2 leading-relaxed">{{ prompt.data.description }}</p>
+  
+  <div class="flex gap-2 mt-4 flex-wrap overflow-hidden h-6">
+    {% set safeTags = prompt.data.tags | filterTags %}
+    {% for tag in safeTags.slice(0,3) %}
+      <span class="text-xs text-slate-500 group-hover:text-primary-400 transition-colors whitespace-nowrap">#{{ tag }}</span>
+    {% endfor %}
+    {% if safeTags.length > 3 %}
+      <span class="text-xs text-slate-600">+{{ safeTags.length - 3 }}</span>
+    {% endif %}
+  </div>
+</a>

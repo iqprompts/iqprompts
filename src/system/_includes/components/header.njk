@@ -1,0 +1,12 @@
+<div class="mb-16 text-center max-w-2xl mx-auto relative">
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-{{ headerColor }}-500/20 blur-[100px] rounded-full pointer-events-none"></div>
+  <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-slate-900 border border-slate-800 shadow-xl mb-6 ring-1 ring-white/10">
+    <div class="text-{{ headerColor }}-400">
+      {{ headerIcon | safe }}
+    </div>
+  </div>
+  <h1 class="text-5xl font-bold bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent mb-4 tracking-tight capitalize">{{ headerTitle }}</h1>
+  <p class="text-slate-400 text-lg">
+    {{ headerDescription | safe }}
+  </p>
+</div>

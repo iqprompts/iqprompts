@@ -1,0 +1,81 @@
+---
+layout: layouts/base.njk
+title: "Intelligence Prompts Directory"
+permalink: /
+---
+<div class="text-center py-20">
+  <h1 class="text-5xl sm:text-6xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-b from-white to-slate-500 bg-clip-text text-transparent px-4 sm:px-0">
+    Unlock the <br class="block md:hidden"> <span class="inline-block text-6xl sm:text-7xl md:text-6xl lg:text-7xl mt-2 md:mt-0">Power of AI</span>
+  </h1>
+  <p class="text-lg text-slate-400 mb-8 md:mb-12 leading-relaxed h-auto md:h-8">The global repository of system prompts for any model and every purpose.</p>
+  
+  <div class="relative max-w-lg mx-auto group">
+    <div class="absolute -inset-1 bg-gradient-to-r from-primary-600 to-purple-600 rounded-xl blur opacity-25 group-hover:opacity-75 group-focus-within:opacity-75 transition duration-1000 group-hover:duration-200 group-focus-within:duration-200"></div>
+    <div class="relative flex items-center bg-slate-900 rounded-xl border border-slate-700 shadow-2xl">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-4 text-slate-500"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/></svg>
+      <input type="text" id="search" placeholder="Search prompts, models, or tags..." class="w-full bg-transparent border-none text-slate-200 placeholder-slate-500 focus:ring-0 focus:outline-none py-3 pl-3 pr-4 rounded-xl">
+    </div>
+  </div>
+</div>
+
+<div class="flex items-center justify-between mb-8">
+  <h2 class="text-2xl font-bold text-slate-200">Latest Prompts</h2>
+  <div class="text-sm text-slate-500">
+    Showing newest {{ collections.prompts | length | min(9) }} of {{ collections.prompts | length }}
+  </div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20" id="prompts-grid">
+  {% for prompt in collections.prompts | reverse | limit(9) %}
+  {% include "components/card.njk" %}
+  {% endfor %}
+</div>
+
+<!-- Explore Topics Section -->
+<div class="mb-20 py-8">
+  <div class="flex items-center justify-between mb-8">
+    <h2 class="text-2xl font-bold text-slate-200">Explore Topics</h2>
+    <div class="flex items-center gap-2 text-sm font-medium text-slate-400">
+      <a href="/categories/" class="hover:text-primary-400 transition-colors">All Categories</a>
+      <span class="text-slate-600">&middot;</span>
+      <a href="/tags/" class="hover:text-primary-400 transition-colors">All Tags</a>
+    </div>
+  </div>
+  
+  <div class="flex flex-wrap gap-2">
+    {% for tag in collections.popularTags | limit(30) | shuffle | limit(10) %}
+      <a href="/tags/{{ tag.name | slugify }}/" class="group relative inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/50 border border-slate-700 hover:border-primary-500/50 hover:bg-slate-900/80 transition-all duration-300 hover:-translate-y-0.5 text-sm">
+        <span class="text-slate-400 group-hover:text-primary-400 transition-colors">#</span>
+        <span class="text-slate-200 group-hover:text-white font-medium">{{ tag.name }}</span>
+        {% if tag.count > 1 %}
+        <span class="text-xs py-0.5 px-1.5 rounded-full bg-slate-800 text-slate-500 group-hover:bg-slate-800/80 group-hover:text-slate-400 border border-slate-700/50">{{ tag.count }}</span>
+        {% endif %}
+      </a>
+    {% endfor %}
+    <a href="/tags/" class="inline-flex items-center justify-center px-3 py-1.5 rounded-full border border-slate-700 text-slate-500 hover:text-slate-300 hover:bg-slate-800 transition-colors text-sm">
+      View all tags &rarr;
+    </a>
+  </div>
+</div>
+
+
+
+<script>
+  const searchInput = document.getElementById('search');
+  const cards = document.querySelectorAll('.prompt-card');
+
+  searchInput.addEventListener('input', (e) => {
+    const term = e.target.value.toLowerCase();
+    cards.forEach(card => {
+      const title = card.querySelector('h3').textContent.toLowerCase();
+      const desc = card.querySelector('p').textContent.toLowerCase();
+      const tags = Array.from(card.querySelectorAll('span')).map(s => s.textContent.toLowerCase()).join(' ');
+      
+      if (title.includes(term) || desc.includes(term) || tags.includes(term)) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+</script>

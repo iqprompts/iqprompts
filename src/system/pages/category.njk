@@ -1,0 +1,46 @@
+---
+pagination:
+  data: collections.categories
+  size: 1
+  alias: category
+  addAllPagesToCollections: true
+layout: layouts/base.njk
+eleventyComputed:
+  title: "{{ category | capitalize }} Prompts"
+permalink: /{{ category }}/
+---
+<div class="py-12">
+  {% set headerColor = "indigo" %}
+  {% set headerTitle = category | replace('-', ' ') %}
+  {% set headerDescription %}
+    Browse all prompts in the <span class="text-indigo-400 font-mono text-sm px-2 py-0.5 rounded-md bg-indigo-500/10 border border-indigo-500/20">{{ category }}</span> category
+  {% endset %}
+  {% set headerIcon %}
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+  {% endset %}
+  {% include "components/header.njk" %}
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for prompt in collections.prompts | reverse %}
+      {% set promptCategory = prompt.filePathStem.split('/')[2] %}
+      {% if promptCategory == category %}
+      <a href="{{ prompt.url }}" class="prompt-card group bg-slate-900/40 border border-slate-800 rounded-xl p-6 hover:bg-slate-900/60 hover:border-primary-500/50 transition-all duration-300 hover:-translate-y-1 block relative overflow-hidden">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="px-2 py-1 rounded text-xs font-bold bg-primary-950/50 text-primary-400 border border-primary-900/50">{{ prompt.data.model }}</span>
+          <span class="text-slate-600 text-xs">{{ prompt.date | readableDate }}</span>
+        </div>
+        <h3 class="text-xl font-bold text-slate-200 mb-2 group-hover:text-white transition-colors">{{ prompt.data.title }}</h3>
+        <p class="text-slate-400 text-sm mb-4 line-clamp-2">{{ prompt.data.description }}</p>
+        
+        <div class="flex gap-2 mt-4">
+          {% for tag in prompt.data.tags %}
+            {% if tag != "prompts" %}
+            <span class="text-xs text-slate-500">#{{ tag }}</span>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </a>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>

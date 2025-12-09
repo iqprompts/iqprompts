@@ -1,0 +1,27 @@
+---
+layout: layouts/base.njk
+title: "All Categories"
+permalink: /categories/
+---
+
+<div class="py-12">
+  <div class="text-center mb-16">
+    <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">Browse Categories</h1>
+    <p class="text-slate-400 text-lg">Explore prompts organized by topic</p>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for category in collections.categories %}
+      <a href="/{{ category }}/" class="group block p-8 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-900/80 transition-all duration-300 hover:-translate-y-1">
+        <div class="flex items-center justify-between mb-4">
+          <div class="p-3 rounded-lg bg-indigo-500/10 text-indigo-400 group-hover:bg-indigo-500/20 group-hover:scale-110 transition-all duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-600 group-hover:text-indigo-400 transition-colors transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </div>
+        <h2 class="text-xl font-bold text-slate-200 group-hover:text-white mb-2 capitalize">{{ category | replace('-', ' ') }}</h2>
+        <p class="text-sm text-slate-500 group-hover:text-slate-400">View collection &rarr;</p>
+      </a>
+    {% endfor %}
+  </div>
+</div>

@@ -1,0 +1,35 @@
+---
+layout: layouts/base.njk
+title: "All Authors"
+permalink: /authors/
+---
+
+<div class="py-8 md:py-12">
+  <div class="text-center mb-8 md:mb-16">
+    <h1 class="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">Contributors</h1>
+    <p class="text-slate-400 text-lg">Meet the community behind the prompts</p>
+  </div>
+
+  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-6xl mx-auto px-4">
+    {% for author in collections.authors %}
+      {% set githubUser = github[author] %}
+      <a href="/authors/{{ author | slugify }}/" class="group flex flex-col items-center justify-center gap-3 p-3 md:p-6 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-primary-500/50 hover:bg-slate-900/80 transition-all duration-300 hover:-translate-y-1 min-w-0">
+        
+        <div class="relative shrink-0">
+          <div class="absolute inset-0 bg-primary-500/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <img 
+            src="{{ githubUser.avatar_url }}" 
+            alt="{{ author }}" 
+            class="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-slate-700 group-hover:border-primary-500 transition-colors duration-300 relative z-10 object-cover bg-slate-800"
+            loading="lazy"
+          >
+        </div>
+        
+        <div class="text-center z-10 w-full overflow-hidden">
+          <h3 class="font-bold text-sm md:text-base text-slate-200 group-hover:text-white transition-colors truncate" title="{{ githubUser.name }}">{{ githubUser.name }}</h3>
+          <p class="text-[10px] md:text-xs text-slate-500 group-hover:text-primary-400 font-mono mt-1 truncate" title="@{{ author }}">@{{ author }}</p>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+</div>

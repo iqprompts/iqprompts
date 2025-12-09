@@ -1,0 +1,41 @@
+---
+pagination:
+  data: collections
+  size: 1
+  alias: tag
+  filter:
+    - all
+    - nav
+    - post
+    - posts
+    - tagList
+    - prompts
+    - categories
+    - authors
+    - models
+    - allTags
+    - popularTags
+  addAllPagesToCollections: true
+layout: layouts/base.njk
+eleventyComputed:
+  title: "Prompts tagged “{{ tag }}”"
+  permalink: /tags/{{ tag | slugify }}/
+---
+<div class="py-16">
+  {% set headerColor = "primary" %}
+  {% set headerTitle = tag %}
+  {% set headerDescription %}
+    Curated collection of prompts tagged with <span class="text-primary-400 font-mono text-sm px-2 py-0.5 rounded-md bg-primary-500/10 border border-primary-500/20">#{{ tag }}</span>
+  {% endset %}
+  {% set headerIcon %}
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z"/><path d="M7 7h.01"/></svg>
+  {% endset %}
+  {% include "components/header.njk" %}
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% set taglist = collections[ tag ] %}
+    {% for prompt in taglist | reverse %}
+      {% include "components/card.njk" %}
+    {% endfor %}
+  </div>
+</div>

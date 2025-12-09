@@ -1,0 +1,22 @@
+---
+layout: layouts/base.njk
+title: "All Tags"
+permalink: /tags/
+---
+
+<div class="py-12">
+  <div class="text-center mb-16">
+    <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">Browse Tags</h1>
+    <p class="text-slate-400 text-lg">Find prompts by specific keywords and topics</p>
+  </div>
+
+  <div class="flex flex-wrap justify-center gap-2 max-w-4xl mx-auto">
+    {% for tag in collections.popularTags %}
+      <a href="/tags/{{ tag.name | slugify }}/" class="group relative inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/50 border border-slate-700 hover:border-primary-500/50 hover:bg-slate-900/80 transition-all duration-300 hover:-translate-y-0.5 text-sm">
+        <span class="text-slate-400 group-hover:text-primary-400 transition-colors">#</span>
+        <span class="text-slate-200 group-hover:text-white font-medium">{{ tag.name }}</span>
+        <span class="text-xs py-0.5 px-1.5 rounded-full bg-slate-800 text-slate-500 group-hover:bg-slate-800/80 group-hover:text-slate-400 border border-slate-700/50">{{ tag.count }}</span>
+      </a>
+    {% endfor %}
+  </div>
+</div>
