@@ -59,6 +59,7 @@ module.exports = function (eleventyConfig) {
 
     // Copy assets
     // eleventyConfig.addPassthroughCopy("./src/assets"); // Commented out as checked not existing, or update if exists
+    eleventyConfig.addPassthroughCopy("src/robots.txt");
 
     // Filter for readable dates
     eleventyConfig.addFilter("readableDate", dateObj => {
